@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <title>Addition</title>
+        <style>
+            #app {
+                text-align: center;
+                font-family: sans-serif;
+            }
+
+            #problem {
+                font-size: 72px;
+            }
+
+            #winner {
+                font-size: 72px;
+                color: green;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script type="text/babel">
+            
+            class App extends React.Component {
+
+                constructor(props) {
+                    super(props);
+                    this.state = {
+                        n1: 1,
+                        n2: 2,
+                        resp: "",
+                        score: 0
+                    };
+                }
+
+                render() {
+                    if (this.state.score === 5) {
+                        return (
+                            <div id="winner">
+                                You won!!
+                            </div>
+                        );
+                    }
+                    return (
+                        <div>
+                            <div id="problem">{this.state.n1} + {this.state.n2}</div>
+                            <input onKeyPress={this.inputKeyPress}onChange={this.updateResp} value={this.state.resp}/>
+                            <div>Score: {this.state.score}</div>
+                        </div>
+                    );
+                }
+
+                updateResp = (event) => {
+                    this.setState({
+                        resp: event.target.value
+                    });
+                }
+
+                inputKeyPress = (event) => {
+                    if (event.key === 'Enter') {
+                        const answer = parseInt(this.state.resp);
+                        if (answer === this.state.n1 + this.state.n2) {
+                            this.setState(state => ({
+                                score: state.score + 1,
+                                n1: Math.ceil(Math.random()*10),
+                                n2: Math.ceil(Math.random()*10),
+                                resp: ""
+                            }));
+                        } else {
+                            this.setState(state => ({
+                                score: state.score - 1,
+                                resp: ""
+                            }));
+                        }
+                    }
+                }
+
+            }
+            ReactDOM.render(<App />, document.querySelector('#app'));
+        </script>
+    </body>
+</html>
