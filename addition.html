@@ -15,9 +15,22 @@
                 font-size: 72px;
             }
 
+            @keyframes grow {
+                from {
+                    font-size: 0px;
+                }
+                to {
+                    font-size: 72px;
+                }
+            }
+
             #winner {
                 font-size: 72px;
+                text-align: center;
                 color: green;
+                animation-name: grow;
+                animation-fill-mode: forwards;
+                animation-duration: 1s;
             }
         </style>
     </head>
@@ -38,7 +51,7 @@
                 }
 
                 render() {
-                    if (this.state.score === 5) {
+                    if (this.state.score === 10) {
                         return (
                             <div id="winner">
                                 You won!!
